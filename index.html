@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>이름 궁합 테스트</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #fdf6f0;
+    }
+    h1 {
+      color: #d44f4f;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>💘 이름 궁합 테스트 💘</h1>
+  <p>당신의 이름과 상대방 이름을 입력해보세요!</p>
+
+  <input type="text" id="yourName" placeholder="당신의 이름" />
+  <input type="text" id="partnerName" placeholder="상대방 이름" />
+  <br>
+  <button onclick="checkCompatibility()">궁합 보기</button>
+
+  <div id="result"></div>
+
+  <script>
+    function checkCompatibility() {
+      const yourName = document.getElementById("yourName").value.trim();
+      const partnerName = document.getElementById("partnerName").value.trim();
+
+      if (!yourName || !partnerName) {
+        document.getElementById("result").innerText = "이름을 모두 입력해주세요!";
+        return;
+      }
+
+      // 간단한 궁합 알고리즘: 두 이름의 유니코드 합을 비교해 궁합 퍼센트 계산
+      const sumCharCode = (str) => [...str].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+      const compatibility = ((sumCharCode(yourName) + sumCharCode(partnerName)) % 101);
+
+      let message = "";
+      if (compatibility > 90) {
+        message = "완벽한 천생연분이에요! 💍";
+      } else if (compatibility > 70) {
+        message = "서로를 잘 이해할 수 있는 좋은 궁합이에요! 😊";
+      } else if (compatibility > 50) {
+        message = "약간의 노력만 있다면 잘 맞을 수 있어요! 🤝";
+      } else {
+        message = "조금 다른 점이 많지만, 반대는 끌릴 수도 있죠! 😅";
+      }
+
+      document.getElementById("result").innerText =
+        `${yourName} ❤️ ${partnerName}\n궁합률: ${compatibility}%\n${message}`;
+    }
+  </script>
+</body>
+</html>
